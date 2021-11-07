@@ -22,7 +22,9 @@
       </div>
 
       <v-spacer></v-spacer>
-
+      <v-btn icon @click="toggleDark">
+        <v-icon>mdi-brightness-6</v-icon>
+      </v-btn>
       <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
@@ -33,9 +35,12 @@
     </v-app-bar>
 
     <v-main>
-      <v-container v-for="strip in strips" :key="strip.Label">
-        <Strip v-bind="strip" />
-        <v-divider></v-divider>
+      <v-container>
+        <v-row>
+          <v-col cols="auto" v-for="strip in strips" :key="strip.Label">
+            <Strip v-bind="strip" />
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
@@ -44,10 +49,10 @@
 <script>
 import Strip from "./components/Strip";
 import io from "socket.io-client";
-var socket = io.connect("http://192.168.1.215:8080");
-
+var socket;
 export default {
   name: "App",
+  props: ["config"],
 
   components: {
     Strip,
@@ -60,7 +65,12 @@ export default {
       version: "",
     };
   },
+
   created() {
+    if (this.config.theme == "dark") {
+      this.$vuetify.theme.dark = true;
+    }
+    socket = io.connect(`http://${this.config.ip}:${this.config.port}`);
     this.getData();
     this.sendReady();
   },
@@ -80,6 +90,10 @@ export default {
         data = JSON.parse(data);
         this.strips = data;
       });
+    },
+
+    toggleDark() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
 };

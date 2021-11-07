@@ -5,10 +5,10 @@ const {
 var vm = Voicemeeter.init();
 var stripNumber = 0;
 
-const IP = require("ip").address();
-
-var config = require(__dirname + '/app/views/config');
+var config = require(__dirname + '/app/views/config.json');
+const IP = config.ip;
 const PORT = config.port;
+// TODO: IP choice on first boot
 
 const express = require("express")
 const app = express();
@@ -39,6 +39,10 @@ io.on('connection', (socket) => {
             for (const property in StripProperties) {
                 strip[property] = vm.getStripParameter(i, StripProperties[property]);
             }
+            if (!strip.Label) {
+                continue;
+            }
+            strip["Type"]= vm.type == "voicemeeterPotato" ? 2 : (vm.type == "voicemeeterBanana" ? 1 : 0);
             data.push(strip);
         };
         return data;
