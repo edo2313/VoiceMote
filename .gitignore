@@ -3,7 +3,8 @@ node_modules
 /dist
 /app
 dist.zip
-
+repo-image.psd
+repo-image.png
 
 # local env files
 .env.local
