@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build-vue": "vue-cli-service build --dest app",
     "lint": "vue-cli-service lint",
-    "package": "pkg -C Brotli . && npm run build-vue && cp -R ./app ./dist && 7z a -tzip dist.zip .\\dist\\"
+    "package": "pkg -C Brotli . && npm run build-vue && cp -R ./app ./VoiceMote && 7z a -tzip VoiceMote_%npm_package_version%.zip .\\VoiceMote\\ && rm -R .\\VoiceMote"
   },
   "pkg": {
     "assets": [
@@ -37,7 +37,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
-    "vue": "^2.6.11",
+    "vue": "^2.6.14",
     "vue-cli-plugin-vuetify": "~2.4.1",
     "vue-socket.io": "^3.0.10",
     "vue-template-compiler": "^2.6.11",
