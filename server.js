@@ -10,6 +10,7 @@ const IP = config.ip;
 const PORT = config.port;
 // TODO: IP choice on first boot
 
+const path = require('path');
 const express = require("express")
 const app = express();
 let http = require('http').Server(app);
@@ -44,13 +45,13 @@ io.on('connection', (socket) => {
             }
             strip["Type"]= vm.type == "voicemeeterPotato" ? 2 : (vm.type == "voicemeeterBanana" ? 1 : 0);
             data.push(strip);
-        };
+        }
         return data;
     }
     socket.on('ready', () => {
         console.log('Connected');
         vm.updateDeviceList();
-        data = {
+        let data = {
             type: vm.type,
             version: vm.version,
             inputDevices: vm.inputDevices,
