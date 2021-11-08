@@ -5,7 +5,7 @@ const {
 var vm = Voicemeeter.init();
 var stripNumber = 0;
 
-var config = require(__dirname + '/app/views/config.json');
+var config = require('./app/config.json');
 const IP = config.ip;
 const PORT = config.port;
 // TODO: IP choice on first boot
@@ -16,7 +16,7 @@ let http = require('http').Server(app);
 
 var qrcode = require('qrcode-terminal');
 
-app.use(express.static(__dirname + '/app/views/'));
+app.use(express.static('./app/'));
 
 http.listen(PORT, () => {
     console.log(`Connect to the web interface at http://${IP}:${PORT} or scan the QR code below`);
