@@ -4,6 +4,7 @@ node_modules
 /VoiceMote
 repo-image.psd
 repo-image.png
+logo.psd
 VoiceMote_*.zip
 
 # local env files
