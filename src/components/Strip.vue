@@ -34,6 +34,7 @@
 <script>
 export default {
   props: {
+    Index: Number,
     Mono: Number,
     Mute: Number,
     Solo: Number,
@@ -66,15 +67,51 @@ export default {
 
   name: "Strip",
   data() {
-    return {
-      isConnected: false,
-    };
+  },
+  methods: {
+    setData() {
+      let data ={};
+      for (let prop in this.$props) {
+        data[prop] = this.$props[prop];
+      }
+      this.$emit('setStrip', data)
+    }
   },
 
   watch: {
-    Gain(value) {
-      console.log(value);
+    Gain() {
+      this.setData();
     },
-  },
+    Mute() {
+      this.setData();
+    },
+    Solo() {
+      this.setData();
+    },
+    A1() {
+      this.setData();
+    },
+    A2() {
+      this.setData();
+    },
+    A3() {
+      this.setData();
+    },
+    A4() {
+      this.setData();
+    },
+    A5() {
+      this.setData();
+    },
+    B1() {
+      this.setData();
+    },
+    B2() {
+      this.setData();
+    },
+    B3() {
+      this.setData();
+    }
+  }
 };
 </script>

@@ -6,23 +6,27 @@
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
-          src="./assets/logo.png"
+          src="./assets/logo-white.png"
           transition="scale-transition"
           width="40"
         />
-        <v-toolbar-title>VoiceMote</v-toolbar-title>
+        <a href="https://github.com/edo2313/VoiceMote" target="_blank">
+          <v-toolbar-title class="white--text">
+            VoiceMote
+          </v-toolbar-title>
+        </a>
       </div>
 
       <v-spacer></v-spacer>
       <v-btn icon @click="toggleDark">
-        <v-icon>mdi-brightness-6</v-icon>
+        <v-icon color="white">mdi-brightness-6</v-icon>
       </v-btn>
       <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
       >
-        <span class="mr-2">{{ type }} v. {{ version }}</span>
+        <span class="mr-2 white--text">{{ type }} v. {{ version }}</span>
       </v-btn>
     </v-app-bar>
 
@@ -30,11 +34,21 @@
       <v-container>
         <v-row>
           <v-col cols="auto" v-for="strip in strips" :key="strip.Label">
-            <Strip v-bind="strip" />
+            <Strip @setStrip="setStrip" v-bind="strip" />
           </v-col>
         </v-row>
       </v-container>
     </v-main>
+    <v-footer padless>
+      <v-card flat tile width="100%" color="primary" class="text-center">
+        <v-card-text class="white--text">
+          Made with <v-icon class="white--text">mdi-heart</v-icon> by
+          <a href="https://edo2313.github.io" target="_blank">
+            <strong class="white--text text-decoration-none">edo2313</strong>
+          </a>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </v-app>
 </template>
 
@@ -52,6 +66,7 @@ export default {
 
   data() {
     return {
+      connected: false,
       strips: [],
       type: "",
       version: "",
@@ -82,6 +97,10 @@ export default {
         data = JSON.parse(data);
         this.strips = data;
       });
+    },
+
+    setStrip(data) {
+      socket.emit("setStrip", JSON.stringify(data));
     },
 
     toggleDark() {
