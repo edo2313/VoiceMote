@@ -69,6 +69,7 @@ io.on('connection', (socket) => {
 
     socket.on('setStrip', (data) => {
         data = JSON.parse(data);
+        ready = false;
         let promises = [];
         promises.push(vm.setStripParameter(data["Index"], StripProperties.Gain, data["Gain"]));
         promises.push(vm.setStripParameter(data["Index"], StripProperties.A1, +data["A1"]));
