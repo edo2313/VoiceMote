@@ -11,9 +11,7 @@
           width="40"
         />
         <a href="https://github.com/edo2313/VoiceMote" target="_blank">
-          <v-toolbar-title class="white--text">
-            VoiceMote
-          </v-toolbar-title>
+          <v-toolbar-title class="white--text">VoiceMote</v-toolbar-title>
         </a>
       </div>
 
@@ -77,7 +75,7 @@ export default {
     if (this.config.theme == "dark") {
       this.$vuetify.theme.dark = true;
     }
-    socket = io.connect(`http://${this.config.ip}:${this.config.port}`);
+    socket = io.connect(`http://${location.hostname}:${this.config.port}`);
     this.getData();
     this.sendReady();
   },

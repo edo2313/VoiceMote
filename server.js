@@ -7,7 +7,7 @@ var stripNumber = 0;
 var ready = false;
 
 var config = require('./app/config.json');
-const IP = config.ip;
+const IP = 'localhost';
 const PORT = config.port;
 // TODO: IP choice on first boot
 
