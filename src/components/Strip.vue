@@ -1,34 +1,36 @@
 <template>
-  <v-row>
-    <v-col cols="5">
-      <b>{{ Label }}</b>
-      <v-slider
-        v-model="Gain"
-        :label="`${Gain} dB`"
-        thumb-label
-        :color="Mute ? `red` : Solo ? `orange` : `green`"
-        max="12"
-        min="-60"
-        vertical
-      ></v-slider>
-      <p v-if="Solo">Solo</p>
-      <p v-if="Mute">Mute</p>
-    </v-col>
-    <v-col cols="5">
-      <v-checkbox v-model="A1" label="A1" color="red" hide-details></v-checkbox>
-      <v-checkbox v-model="A2" label="A2" color="red" hide-details></v-checkbox>
-      <v-checkbox v-model="A3" label="A3" color="red" hide-details v-if="Type == 1 || Type == 2"></v-checkbox>
-      <v-checkbox v-model="A4" label="A4" color="red" hide-details v-if="Type == 2"></v-checkbox>
-      <v-checkbox v-model="A5" label="A5" color="red" hide-details v-if="Type == 2"></v-checkbox>
-      <v-checkbox v-model="B1" label="B1" color="red" hide-details></v-checkbox>
-      <v-checkbox v-model="B2" label="B2" color="red" hide-details v-if="Type == 1 || Type == 2"></v-checkbox>
-      <v-checkbox v-model="B3" label="B3" color="red" hide-details v-if="Type == 2"></v-checkbox>
-
-    </v-col>
-    <v-col cols="2">
-      <v-divider vertical></v-divider>
-    </v-col>
-  </v-row>
+  <v-container class="bg-surface-variant">
+    <v-row>
+      <b>{{ stripName }} - {{ Label }}</b>
+    </v-row>
+    <v-row>
+      <v-col cols="4">
+        <v-slider v-model="Gain" thumb-label :label="`${Gain} dB`" :color="Mute ? `red` : Solo ? `orange` : `green`"
+          max="12" min="-60" vertical></v-slider>
+      </v-col>
+      <v-col cols="5">
+        <v-checkbox v-model="A1" label="A1" color="red" hide-details></v-checkbox>
+        <v-checkbox v-model="A2" label="A2" color="red" hide-details></v-checkbox>
+        <v-checkbox v-model="A3" label="A3" color="red" hide-details v-if="Type == 1 || Type == 2"></v-checkbox>
+        <v-checkbox v-model="A4" label="A4" color="red" hide-details v-if="Type == 2"></v-checkbox>
+        <v-checkbox v-model="A5" label="A5" color="red" hide-details v-if="Type == 2"></v-checkbox>
+        <v-checkbox v-model="B1" label="B1" color="green" hide-details></v-checkbox>
+        <v-checkbox v-model="B2" label="B2" color="green" hide-details v-if="Type == 1 || Type == 2"></v-checkbox>
+        <v-checkbox v-model="B3" label="B3" color="green" hide-details v-if="Type == 2"></v-checkbox>
+      </v-col>
+      <v-col cols="2">
+        <v-divider vertical></v-divider>
+      </v-col>
+    </v-row>
+    <v-row class="ma-3">
+      <v-checkbox v-model="Mute" label="Mute" color="green" hide-details></v-checkbox>
+    </v-row>   
+    <v-row class="pa-2 ma-2">
+      <v-btn @click="Gain = 0">
+        Reset
+      </v-btn>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -66,16 +68,22 @@ export default {
   },
 
   name: "Strip",
-  data() {
+    data() { return {};
   },
   methods: {
     setData() {
-      let data ={};
+      let data = {};
       for (let prop in this.$props) {
         data[prop] = this.$props[prop];
       }
       this.$emit('setStrip', data)
     }
+  },
+
+  computed: {
+    stripName() {
+      return  (this.Index < 3 ? "A" : "B") + (this.Index < 3 ? this.Index + 1 : this.Index - 2);
+    },
   },
 
   watch: {
